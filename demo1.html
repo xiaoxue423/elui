@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab选项卡</title>
+    <style>
+        .container {
+            max-width: 800px;
+            /* 水平居中 */
+            margin: 30px auto;
+            padding: 16px;
+            border-radius: 4px;
+            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .3);
+        }
+        
+        .tabs .tab-header {
+            display: flex;
+            font-size: 13px;
+            color: #303030;
+            /* 2??? */
+            /* line-height: 2; */
+            line-height: 30px;
+            font-weight: 500;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .tabs .tab-item {
+            margin-right: 30px;
+            margin-bottom: -2px;
+            cursor: pointer;
+        }
+        
+        .tabs .tab-item.active {
+            color: #409eff;
+            border-bottom: 2px solid #408eff;
+        }
+        
+        .tab-content .tab-panel {
+            padding: 16px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .tab-content .tab-panel.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Tab选项卡</h2>
+        <div class="tabs">
+            <div class="tab-header">
+                <span class="tab-item active">用户管理</span>
+                <span class="tab-item">配置管理</span>
+                <span class="tab-item">角色管理</span>
+                <span class="tab-item">定时任务补偿</span>
+            </div>
+            <div class="tab-content">
+                <div class="tab-panel active">用户管理</div>
+                <div class="tab-panel">配置管理</div>
+                <div class="tab-panel">角色管</div>
+                <div class="tab-panel">定时任务补偿</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // querySelector得到的是一个元素
+        const $ = s => document.querySelector(s)
+            // querySelectorAll得到的是一个类数组
+        const $$ = s => document.querySelectorAll(s)
+            // 类数组对象
+        const $$tabItems = $$('.tabs .tab-item')
+        const $$tabPanel = $$('.tabs .tab-panel')
+            // 遍历类数组
+        $$('.tabs .tab-item').forEach($tab => {
+            // 绑定事件
+            $tab.onclick = function() {
+                $$('.tabs .tab-item').forEach($tab => $tab.classList.remove('active'))
+                this.classList.add('active')
+                    //this就是我们点的dom对象
+                    // [...]把类数组变成数组  然后再使用数组方法
+                let index = [...$$tabItems].indexOf(this)
+
+                $$tabPanel.forEach($panel => $panel.classList.remove('active'))
+
+                // 点击对应的item,得到对应的Panel
+                $$tabPanel[index].classList.add('active')
+            }
+        });
+    </script>
+</body>
+
+</html>
